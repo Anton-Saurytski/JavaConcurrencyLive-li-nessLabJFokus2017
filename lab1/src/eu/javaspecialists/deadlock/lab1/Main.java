@@ -2,6 +2,8 @@ package eu.javaspecialists.deadlock.lab1;
 
 import eu.javaspecialists.deadlock.util.*;
 
+import java.lang.management.*;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -14,6 +16,19 @@ import java.util.concurrent.*;
  */
 public class Main {
     public static void main(String... args) throws InterruptedException, TimeoutException {
+        Timer timer = new Timer(true);
+        timer.schedule(new TimerTask() {
+            private final Thread mainThread = Thread.currentThread();
+
+            public void run() {
+                ThreadMXBean tmb = ManagementFactory.getThreadMXBean();
+                if (tmb.findDeadlockedThreads() == null) {
+                    System.err.println("Still drinking???  Something is wrong!");
+                    System.exit(1);
+                }
+            }
+        }, 5000);
+
         Symposium symposium = new Symposium(5);
         ThinkerStatus status = symposium.run();
         if (status == ThinkerStatus.UNHAPPY_THINKER) {
