@@ -38,16 +38,14 @@ public class Main {
         }
 
         DeadlockTester tester = new DeadlockTester();
-        tester.checkThatCodeDoesNotDeadlock(new Runnable() {
-            public void run() {
-                try {
-                    ThinkerStatus status = new Symposium(5).run();
-                    if (status != ThinkerStatus.HAPPY_THINKER) {
-                        throw new AssertionError("Thinker not happy");
-                    }
-                } catch (Exception e) {
-                    throw new AssertionError(e);
+        tester.checkThatCodeDoesNotDeadlock(() -> {
+            try {
+                ThinkerStatus status1 = new Symposium(5).run();
+                if (status1 != ThinkerStatus.HAPPY_THINKER) {
+                    throw new AssertionError("Thinker not happy");
                 }
+            } catch (Exception e) {
+                throw new AssertionError(e);
             }
         });
 

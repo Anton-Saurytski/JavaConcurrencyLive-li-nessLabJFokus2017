@@ -36,7 +36,7 @@ public class Symposium {
         ExecutorService exec = Executors.newCachedThreadPool();
         try {
             CompletionService<ThinkerStatus> results =
-                new ExecutorCompletionService<ThinkerStatus>(exec);
+                new ExecutorCompletionService<>(exec);
             for (Thinker thinker : thinkers) {
                 results.submit(thinker);
             }

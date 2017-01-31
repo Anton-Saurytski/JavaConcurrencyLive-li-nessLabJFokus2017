@@ -4,6 +4,11 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * We want to give Fibonacci as much memory as possible, for
+ * example:
+ * -verbose:gc -Xmx8g -Xms8g -XX:NewSize=4g -XX:SurvivorRatio=1
+ */
 public class FibonacciTest {
     @Test
     public void testSimpleValues() {
